@@ -98,7 +98,9 @@ test('local OCR storage, ownership, lifecycle and safe downloads', async t => {
     await t.test('provider fixture verifies output manifest and a usable ZIP without a network call',async()=>{
       const fixture=path.join(root,'fixture-cli');
       await writeFile(fixture,`#!/usr/bin/env node\nconst fs=require('node:fs');const out=process.argv[process.argv.indexOf('-o')+1];fs.mkdirSync(out+'/images',{recursive:true});fs.writeFileSync(out+'/draft.md','$x^2$\\n![](images/figure.png)');fs.writeFileSync(out+'/data.json','{}');fs.writeFileSync(out+'/images/figure.png','fixture image');`,{mode:0o700});
-      const previous=process.env.MINERU_CLI;process.env.MINERU_CLI=fixture;
+      const previous=Object.fromEntries(['MINERU_CLI','MINERU_BACKEND','MINERU_API_TOKEN'].map(key=>[key,process.env[key]]));
+      // The fake executable never uses a service; do not depend on host credentials.
+      process.env.MINERU_CLI=fixture;process.env.MINERU_BACKEND='open-api';process.env.MINERU_API_TOKEN='synthetic-provider-fixture';
       try {
         const sample=await createTask({name:'provider.pdf',bytes:pdf,owner:'user:a',backend:'open-api'});sample.attempt=1;
         const result=await runMineru(sample);
@@ -106,7 +108,7 @@ test('local OCR storage, ownership, lifecycle and safe downloads', async t => {
         const zip=result.artifacts.find(a=>a.type==='zip');assert.ok(zip.bytes>0);
         const inspection=execFileSync(process.env.STUDIO_PYTHON||'python3',['-c','import sys,zipfile;z=zipfile.ZipFile(sys.argv[1]);assert z.testzip() is None;assert "images/figure.png" in z.namelist();assert "draft.md" in z.namelist()',await safeFile(sample.id,zip.file)]);
         assert.equal(inspection.length,0);assert.match(result.preview,/\$x\^2\$/);
-      }finally {if(previous===undefined)delete process.env.MINERU_CLI;else process.env.MINERU_CLI=previous;}
+      }finally {for(const [key,value]of Object.entries(previous)){if(value===undefined)delete process.env[key];else process.env[key]=value;}}
     });
   } finally {
     for(const [key,value]of Object.entries(previous)) { if(value===undefined)delete process.env[key];else process.env[key]=value; }
