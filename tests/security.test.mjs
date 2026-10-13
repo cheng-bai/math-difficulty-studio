@@ -1,0 +1,13 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { scryptSync } from 'node:crypto';
+import { SignJWT } from 'jose';
+import { checkPassword, issueSession, verifySession, sameOrigin, authReady } from '../lib/security.mjs';
+const user={username:'fixture',name:'Fixture',salt:'a'.repeat(32),hash:scryptSync('test-fixture-password','a'.repeat(32),64).toString('hex')};
+process.env.AUTH_SECRET='test-secret-only-'.repeat(4);
+process.env.AUTH_USERS_JSON=JSON.stringify([user]);
+test('only a correct password yields a user',async()=>{assert.equal((await checkPassword('fixture','test-fixture-password')).username,'fixture');assert.equal(await checkPassword('fixture','wrong'),null);assert.equal(await checkPassword('unknown','test-fixture-password'),null);assert.equal(await checkPassword({},'x'),null);});
+test('signed sessions cannot be forged; changing a password revokes them',async()=>{const token=await issueSession(user);assert.equal((await verifySession(token)).username,'fixture');assert.equal(await verifySession(token.slice(0,-5)+'ABCDE'),null);process.env.AUTH_USERS_JSON=JSON.stringify([{...user,hash:'0'.repeat(128)}]);assert.equal(await verifySession(token),null);process.env.AUTH_USERS_JSON=JSON.stringify([user]);});
+test('expired signed sessions are rejected',async()=>{const token=await new SignJWT({version:'x'}).setProtectedHeader({alg:'HS256'}).setSubject('fixture').setIssuer('math-difficulty-studio').setAudience('math-difficulty-studio').setIssuedAt().setExpirationTime('0s').sign(new TextEncoder().encode(process.env.AUTH_SECRET));assert.equal(await verifySession(token),null);});
+test('cross-site state changes are rejected',()=>{assert.equal(sameOrigin(new Request('https://site.test/api/login',{headers:{host:'site.test',origin:'https://evil.test'}})),false);assert.equal(sameOrigin(new Request('https://site.test/api/login',{headers:{host:'site.test',origin:'https://site.test'}})),true);assert.equal(sameOrigin(new Request('https://site.test/api/login',{headers:{host:'site.test'}})),false);});
+test('invalid configuration fails closed',()=>{const prior=process.env.AUTH_USERS_JSON;process.env.AUTH_USERS_JSON='bad';assert.equal(authReady(),false);process.env.AUTH_USERS_JSON=prior;});

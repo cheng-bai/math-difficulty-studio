@@ -1,0 +1,15 @@
+node_modules/
+.next/
+.next-*/
+.vercel/
+.env*
+!.env.example
+.local/
+private/
+public/vendor/
+test-results/
+.venv/
+__pycache__/
+*.py[cod]
+*.log
+.DS_Store

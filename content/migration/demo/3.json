@@ -1,0 +1,94 @@
+{
+  "schema_version": "studio-unit-v1",
+  "id": "3",
+  "revision": 1,
+  "n": 3,
+  "kind": "填空",
+  "points": null,
+  "optional": false,
+  "module": "缺图演示",
+  "content": {
+    "question": "如图，求阴影部分面积。（演示：题图未提供。）",
+    "answer": "待补充题图",
+    "solution": "缺少题图，暂不作答或评分。",
+    "teaching": "演示结构化改题与可复算评分；不是经过实测校准的难度。"
+  },
+  "analysis_input": {
+    "steps": [
+      {
+        "id": "S1",
+        "type_id": "CALC",
+        "input": "演示题面及前一步结果",
+        "action": "等待补充题图",
+        "output": "未确定",
+        "dependencies": [],
+        "dimensions": {
+          "K": 0,
+          "R": 0,
+          "A": 0,
+          "V": 0,
+          "P": 0,
+          "I": 0
+        },
+        "dimension_evidence": {
+          "K": "演示评分：此维度只需直接定义或短计算。",
+          "R": "演示评分：此维度只需直接定义或短计算。",
+          "A": "演示评分：此维度只需直接定义或短计算。",
+          "V": "演示评分：此维度只需直接定义或短计算。",
+          "P": "演示评分：此维度只需直接定义或短计算。",
+          "I": "演示评分：此维度只需直接定义或短计算。"
+        },
+        "commentary": "该评分输入用于演示维护流程。",
+        "phase_id": "G1",
+        "source_ref": "demo-original"
+      }
+    ],
+    "phases": [
+      {
+        "id": "G1",
+        "name": "完成演示问题",
+        "goal": "待补充题图",
+        "direction": "读取条件 → 运算 → 核验",
+        "output": "待补充题图",
+        "step_ids": [
+          "S1"
+        ]
+      }
+    ],
+    "risks": [
+      {
+        "item": 1,
+        "value": 0,
+        "evidence": "题图缺失，不能把未知风险当作零分。"
+      },
+      {
+        "item": 2,
+        "value": 0,
+        "evidence": "题图缺失，不能把未知风险当作零分。"
+      },
+      {
+        "item": 3,
+        "value": 0,
+        "evidence": "题图缺失，不能把未知风险当作零分。"
+      },
+      {
+        "item": 4,
+        "value": 0,
+        "evidence": "题图缺失，不能把未知风险当作零分。"
+      },
+      {
+        "item": 5,
+        "value": 0,
+        "evidence": "题图缺失，不能把未知风险当作零分。"
+      }
+    ],
+    "B": 0,
+    "B_evidence": "演示输入：直接使用已知代数方法。",
+    "branches": 0,
+    "pending": true,
+    "issue": "题图缺失，面积与几何条件不可确定。"
+  },
+  "source_ids": [
+    "demo-original"
+  ]
+}

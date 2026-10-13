@@ -1,0 +1,124 @@
+{
+  "schema_version": "studio-unit-v1",
+  "id": "2",
+  "revision": 1,
+  "n": 2,
+  "kind": "填空",
+  "points": null,
+  "optional": false,
+  "module": "代数演示",
+  "content": {
+    "question": "求不等式 $x^2-4x+3\\le 0$ 的解集。",
+    "answer": "$[1,3]$",
+    "solution": "因式分解为 $(x-1)(x-3)\\le0$。两根为 $1$ 和 $3$，开口向上的二次函数在两根之间非正，因此解集为 $[1,3]$。",
+    "teaching": "演示结构化改题与可复算评分；不是经过实测校准的难度。"
+  },
+  "analysis_input": {
+    "steps": [
+      {
+        "id": "S1",
+        "type_id": "CALC",
+        "input": "演示题面及前一步结果",
+        "action": "因式分解并求根",
+        "output": "根为1与3",
+        "dependencies": [],
+        "dimensions": {
+          "K": 0,
+          "R": 0,
+          "A": 0,
+          "V": 0,
+          "P": 0,
+          "I": 0
+        },
+        "dimension_evidence": {
+          "K": "演示评分：此维度只需直接定义或短计算。",
+          "R": "演示评分：此维度只需直接定义或短计算。",
+          "A": "演示评分：此维度只需直接定义或短计算。",
+          "V": "演示评分：此维度只需直接定义或短计算。",
+          "P": "演示评分：此维度只需直接定义或短计算。",
+          "I": "演示评分：此维度只需直接定义或短计算。"
+        },
+        "commentary": "该评分输入用于演示维护流程。",
+        "phase_id": "G1",
+        "source_ref": "demo-original"
+      },
+      {
+        "id": "S2",
+        "type_id": "CALC",
+        "input": "演示题面及前一步结果",
+        "action": "由二次式符号确定闭区间",
+        "output": "解集[1,3]",
+        "dependencies": [
+          "S1"
+        ],
+        "dimensions": {
+          "K": 0,
+          "R": 1,
+          "A": 0,
+          "V": 1,
+          "P": 0,
+          "I": 0
+        },
+        "dimension_evidence": {
+          "K": "演示评分：此维度只需直接定义或短计算。",
+          "R": "演示评分：将不等式转为根的位置及区间符号。",
+          "A": "演示评分：此维度只需直接定义或短计算。",
+          "V": "演示评分：将不等式转为根的位置及区间符号。",
+          "P": "演示评分：此维度只需直接定义或短计算。",
+          "I": "演示评分：此维度只需直接定义或短计算。"
+        },
+        "commentary": "该评分输入用于演示维护流程。",
+        "phase_id": "G1",
+        "source_ref": "demo-original"
+      }
+    ],
+    "phases": [
+      {
+        "id": "G1",
+        "name": "完成演示问题",
+        "goal": "$[1,3]$",
+        "direction": "读取条件 → 运算 → 核验",
+        "output": "$[1,3]$",
+        "step_ids": [
+          "S1",
+          "S2"
+        ]
+      }
+    ],
+    "risks": [
+      {
+        "item": 1,
+        "value": 0,
+        "evidence": "演示输入：条件直接，运算可代回核验。"
+      },
+      {
+        "item": 2,
+        "value": 0,
+        "evidence": "演示输入：条件直接，运算可代回核验。"
+      },
+      {
+        "item": 3,
+        "value": 0,
+        "evidence": "演示输入：条件直接，运算可代回核验。"
+      },
+      {
+        "item": 4,
+        "value": 0,
+        "evidence": "演示输入：条件直接，运算可代回核验。"
+      },
+      {
+        "item": 5,
+        "value": 1,
+        "evidence": "演示输入：条件直接，运算可代回核验。"
+      }
+    ],
+    "B": 0,
+    "B_evidence": "演示输入：直接使用已知代数方法。",
+    "branches": 0,
+    "pending": false,
+    "issue": ""
+  },
+  "source_ids": [
+    "demo-original"
+  ]
+}

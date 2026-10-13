@@ -1,0 +1,16 @@
+.env*
+.local/
+.venv/
+.git/
+.vercel/
+node_modules/
+.next*/
+test-results/
+tests/
+content/
+schemas/
+modules/studio/
+modules/__init__.py
+private/studio/.lock
+private/studio/releases/*/source/
+private/studio/releases/*/change.json

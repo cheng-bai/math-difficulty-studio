@@ -1,0 +1,21 @@
+{
+  "schema_version": "studio-paper-v1",
+  "id": "demo",
+  "paper_name": "原创演示题组",
+  "algorithm": "HCT-rules-v1.1",
+  "source": "本项目原创示例 · MIT",
+  "engine_sha256": "a06f48d1a417b5c59e790e979bf28f259bc3dac04971629800f03f7a619eb213",
+  "initial_unit": "2",
+  "unit_ids": [
+    "1",
+    "2",
+    "3"
+  ],
+  "sources": [
+    {
+      "id": "demo-original",
+      "locator": "本仓库原创示例",
+      "verification": "基础运算与区间解集可直接核验；第三题故意缺图以演示待核"
+    }
+  ]
+}

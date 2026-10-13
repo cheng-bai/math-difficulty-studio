@@ -1,0 +1,42 @@
+{
+  "name": "math-difficulty-studio",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "test": "node --test tests/*.test.mjs",
+    "local": "node scripts/run-local.mjs",
+    "local:build": "STUDIO_BUILD_DIR=.next-local next build",
+    "local:start": "node scripts/run-local.mjs --production",
+    "ocr:worker": "node scripts/ocr-worker.mjs",
+    "content:init": "node scripts/setup-demo.mjs && python3 scripts/studio.py init",
+    "content:inspect": "python3 scripts/studio.py inspect",
+    "content:check": "python3 scripts/studio.py check",
+    "content:preview": "python3 scripts/studio.py preview",
+    "content:apply": "python3 scripts/studio.py apply",
+    "test:content": "python3 -m unittest discover -s tests -p \"test_content.py\"",
+    "check:public": "python3 scripts/check-public.py",
+    "test:browser": "node tests/run-browser-smoke.mjs"
+  },
+  "engines": {
+    "node": "22.x"
+  },
+  "dependencies": {
+    "@supabase/ssr": "0.12.7",
+    "@supabase/supabase-js": "2.117.3",
+    "jose": "^6.1.0",
+    "katex": "0.18.10",
+    "next": "^16.0.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "license": "MIT",
+  "description": "Local-first math exam workbench with deterministic scoring and atomic content releases",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cheng-bai/math-difficulty-studio.git"
+  }
+}

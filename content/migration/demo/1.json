@@ -1,0 +1,94 @@
+{
+  "schema_version": "studio-unit-v1",
+  "id": "1",
+  "revision": 1,
+  "n": 1,
+  "kind": "填空",
+  "points": null,
+  "optional": false,
+  "module": "代数演示",
+  "content": {
+    "question": "解方程 $3x-6=0$，则 $x=$＿＿。",
+    "answer": "$2$",
+    "solution": "移项得 $3x=6$，所以 $x=2$。代回左边为 $0$。",
+    "teaching": "演示结构化改题与可复算评分；不是经过实测校准的难度。"
+  },
+  "analysis_input": {
+    "steps": [
+      {
+        "id": "S1",
+        "type_id": "CALC",
+        "input": "演示题面及前一步结果",
+        "action": "移项并除以3",
+        "output": "x=2",
+        "dependencies": [],
+        "dimensions": {
+          "K": 0,
+          "R": 0,
+          "A": 0,
+          "V": 0,
+          "P": 0,
+          "I": 0
+        },
+        "dimension_evidence": {
+          "K": "演示评分：此维度只需直接定义或短计算。",
+          "R": "演示评分：此维度只需直接定义或短计算。",
+          "A": "演示评分：此维度只需直接定义或短计算。",
+          "V": "演示评分：此维度只需直接定义或短计算。",
+          "P": "演示评分：此维度只需直接定义或短计算。",
+          "I": "演示评分：此维度只需直接定义或短计算。"
+        },
+        "commentary": "该评分输入用于演示维护流程。",
+        "phase_id": "G1",
+        "source_ref": "demo-original"
+      }
+    ],
+    "phases": [
+      {
+        "id": "G1",
+        "name": "完成演示问题",
+        "goal": "$2$",
+        "direction": "读取条件 → 运算 → 核验",
+        "output": "$2$",
+        "step_ids": [
+          "S1"
+        ]
+      }
+    ],
+    "risks": [
+      {
+        "item": 1,
+        "value": 0,
+        "evidence": "演示输入：条件直接，运算可代回核验。"
+      },
+      {
+        "item": 2,
+        "value": 0,
+        "evidence": "演示输入：条件直接，运算可代回核验。"
+      },
+      {
+        "item": 3,
+        "value": 0,
+        "evidence": "演示输入：条件直接，运算可代回核验。"
+      },
+      {
+        "item": 4,
+        "value": 0,
+        "evidence": "演示输入：条件直接，运算可代回核验。"
+      },
+      {
+        "item": 5,
+        "value": 0,
+        "evidence": "演示输入：条件直接，运算可代回核验。"
+      }
+    ],
+    "B": 0,
+    "B_evidence": "演示输入：直接使用已知代数方法。",
+    "branches": 0,
+    "pending": false,
+    "issue": ""
+  },
+  "source_ids": [
+    "demo-original"
+  ]
+}

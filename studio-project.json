@@ -1,0 +1,10 @@
+{
+  "schema_version": "studio-project-v1",
+  "canonical": true,
+  "project_id": "math-difficulty-studio",
+  "store": "private/studio",
+  "migrated_papers": [
+    "demo"
+  ],
+  "engine_sha256": "a06f48d1a417b5c59e790e979bf28f259bc3dac04971629800f03f7a619eb213"
+}

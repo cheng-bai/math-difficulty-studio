@@ -1,0 +1,14 @@
+import { randomBytes, scryptSync } from 'node:crypto';
+import { mkdirSync, writeFileSync, existsSync } from 'node:fs';
+const username=(process.argv[2]||'admin').toLowerCase();
+if(!/^[a-z0-9_-]{3,40}$/.test(username)) throw new Error('Use 3–40 lowercase letters, numbers, underscores or hyphens');
+if(existsSync('.local/credentials.json') || existsSync('.env.local')) throw new Error('Credentials already exist; refusing to overwrite');
+const password=randomBytes(18).toString('base64url'), salt=randomBytes(16).toString('hex');
+const user={username,name:username,salt,hash:scryptSync(password,salt,64).toString('hex')};
+const secret=randomBytes(48).toString('base64url');
+mkdirSync('.local',{recursive:true,mode:0o700});
+writeFileSync('.local/credentials.json',JSON.stringify({username,password},null,2),{mode:0o600});
+writeFileSync('.local/deployment-env.json',JSON.stringify({AUTH_SECRET:secret,AUTH_USERS_JSON:JSON.stringify([user])}),{mode:0o600});
+writeFileSync('.env.local',`AUTH_SECRET=${secret}\nAUTH_USERS_JSON='${JSON.stringify([user])}'\n`,{mode:0o600});
+writeFileSync('.local/登录账号.txt',`数学难度研究室\n账号：${username}\n密码：${password}\n\n此文件仅保存在本机，请妥善保管，不要提交或分享。\n`,{mode:0o600});
+console.log('Account created. Credentials saved privately in .local/登录账号.txt');
