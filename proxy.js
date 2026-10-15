@@ -44,5 +44,5 @@ export async function proxy(request) {
 
 export const config = {
   // Private fonts/images/JSON/MD must be checked too; do not exclude extensions.
-  matcher: ['/', '/login', '/api/login', '/api/logout', '/reader/:path*', '/library/:path*', '/bookshelf/:path*', '/national/:path*', '/search', '/modules', '/workbench/:path*'],
+  matcher: ['/', '/login', '/api/login', '/api/logout', '/reader/:path*', '/library/:path*', '/bookshelf/:path*', '/national/:path*', '/midterms/:path*', '/search', '/modules', '/workbench/:path*'],
 };

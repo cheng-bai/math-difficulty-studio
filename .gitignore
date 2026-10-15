@@ -13,3 +13,9 @@ __pycache__/
 *.py[cod]
 *.log
 .DS_Store
+
+# Local source corpora and derived exam evidence stay private.
+content/assets/
+content/migration/2024-I/
+scripts/data/
+tests/fixtures/studio/

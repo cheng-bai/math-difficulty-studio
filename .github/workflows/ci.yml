@@ -17,7 +17,8 @@ jobs:
       - run: npm ci
       - run: python3 -m pip install -r requirements-dev.txt
       - run: npm run content:init
-      - run: npm test && npm run test:content && npm run content:check && npm run check:public
+      - run: npm run midterms:demo
+      - run: npm test && npm run test:content && npm run test:midterms && npm run content:check && npm run check:public
       - run: npm run build
       - run: python3 -m playwright install --with-deps chromium
       - run: npm run test:browser

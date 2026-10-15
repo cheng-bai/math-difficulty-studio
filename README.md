@@ -2,7 +2,7 @@
 
 本地优先的数学试卷工作台：将题目、解答、评分证据与内容版本分开维护，通过确定性计算生成可阅读、可检索、可下载的报告。
 
-开源版提供原创演示题组，包含已定分与缺图待核的例子。现有线上站点中的试卷、教材、书架、学生资料和运营数据不包含在本仓库中。
+开源版提供原创演示题组，以及9套合成期中示例（27小问、26问定分、1问待核、1问缺配分，含模拟缺卷）。期中学校显示为甲至己，所有示例均不代表真实学校考试。现有线上站点中的试卷、教材、书架、学生资料和运营数据不包含在本仓库中。
 
 ## 已有能力
 
@@ -10,6 +10,9 @@
 - H/C/T/D 规则复算；B 关键突破独立展示。输入证据由维护者提供，结构分未经真实作答数据校准。
 - JSON Schema、变更草稿与预览、请求幂等、题目及发布版本冲突保护、原子快照和完整回退。
 - 同一快照生成详情、总览、首页统计、搜索与 JSON 下载。
+- 期中考情总览：覆盖矩阵、固定分组的同年横向/中心三年纵向、考点方法统计、题序难度与CSV下载。
+- 逐卷可视化阅读：可搜索大纲、考点统计、C/T散点、三重筛选和两题评分证据对照，支持手机阅读。
+- 独立期中内容包预览、不可变快照发布和回滚；与既有题组ChangeSet分开维护。
 - 可选的本地 MinerU OCR、不可变原件、任务恢复与 Markdown/题图 ZIP 下载。
 - 本机回环模式、受邀账号登录与可选 Supabase 授权。
 
@@ -27,12 +30,36 @@ python3 -m venv .venv
 source .venv/bin/activate
 python3 -m pip install -r requirements-content.txt
 npm run content:init
+npm run midterms:demo
 npm run local
 ```
 
 打开 <http://127.0.0.1:3102>。本地启动器只绑定回环地址，启动本地工作台和 OCR worker；未安装 OCR 时会显示未配置，不会上传文件或调用模型。演示题组入口是 `/national/demo/试卷难度分析.html`，`national` 为保留的路由命名。
 
-`content:init` 不覆盖已经存在的内容版本与索引。`private/`、本地凭据、任务和生成资源均不进入 Git。KaTeX 浏览器资源由固定版本的 npm 包复制生成。
+`content:init` 不覆盖已经存在的内容版本与索引。`midterms:demo` 生成并导入原创合成期中包；已有非演示期中发布指针时拒绝自动覆盖。打开 `/midterms` 体验期中看板。`private/`、本地凭据、任务和生成资源均不进入 Git。KaTeX 浏览器资源由固定版本的 npm 包复制生成。
+
+## 期中看板与文档导航
+
+![原创演示期中看板](docs/images/midterms-overview.png)
+
+先看资料覆盖与考试范围，再按共同模块、方法比较，最后点题号查原题与评分证据。待核不作零，缺配分不均摊；D为结构规则分，不能换算真实失分率或用时。
+
+| 文档 | 内容 |
+| --- | --- |
+| [产品使用手册](docs/USER_GUIDE.md) | 教师首次使用、OCR到核验与评分、交互、下载、登录部署及故障排查 |
+| [资源索引](docs/RESOURCES.md) | 原创演示、工具、规范、测试与更新办法 |
+| [期中输入与发布规范](docs/midterms.md) | 完整源包字段、固定比较布局、统计口径与版本恢复 |
+| [更新记录](CHANGELOG.md) | 本轮产品功能与资源变化 |
+
+自己的期中包准备好后，在仓库根目录执行：
+
+```sh
+npm run midterms:preview -- --source /path/to/source
+npm run midterms:import -- --source /path/to/source
+npm run midterms:rollback -- <releaseId>
+```
+
+替换路径与目标发布号。预览不切换版本，导入完整成功后才切换，回滚要求目标快照已存在且通过核验。生成器 `python3 scripts/setup-midterms-demo.py --output /tmp/my-midterms-template` 可创建新结构模板，拒绝覆盖不同内容。期中布局当前仅支持既有六个学校键与2023—2026学年，演示通过显示名映射虚构学校；尚不支持任意比较布局。
 
 ## 修改题目
 
@@ -81,6 +108,7 @@ npm run dev
 ```sh
 npm test
 npm run test:content
+python3 -m unittest discover -s tests -p 'test_midterms*.py'
 npm run content:check
 npm run check:public
 npm run build

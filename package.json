@@ -1,6 +1,6 @@
 {
   "name": "math-difficulty-studio",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -19,7 +19,12 @@
     "content:apply": "python3 scripts/studio.py apply",
     "test:content": "python3 -m unittest discover -s tests -p \"test_content.py\"",
     "check:public": "python3 scripts/check-public.py",
-    "test:browser": "node tests/run-browser-smoke.mjs"
+    "test:browser": "node tests/run-browser-smoke.mjs",
+    "midterms:demo": "node scripts/run-midterms-demo.mjs",
+    "midterms:preview": "python3 scripts/import-midterms.py --preview",
+    "midterms:import": "python3 scripts/import-midterms.py --apply",
+    "midterms:rollback": "python3 scripts/rollback-midterms.py",
+    "test:midterms": "python3 -m unittest discover -s tests -p \"test_midterms*.py\""
   },
   "engines": {
     "node": "22.x"
