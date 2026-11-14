@@ -22,7 +22,7 @@ export async function GET(request,{params}) {
   const extension=path.extname(file).toLowerCase();
   if(extension==='.html') {
     const deepLink='<script>(()=>{function jump(){if(!location.hash.startsWith("#q=")||!window.dashboard)return;let id;try{id=decodeURIComponent(location.hash.slice(3))}catch{return}if(dashboard.data.items.some(q=>q.id===id))dashboard.choose(id,true)}window.addEventListener("hashchange",jump);jump()})()</script>';
-    const nav='<nav aria-label="网站导航" style="display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 20px;background:#203a35;color:#f5f3ec;font:13px sans-serif"><a href="/" style="color:inherit;text-decoration:none">← 返回研究室</a><span>试卷总览</span><form method="post" action="/api/logout"><button style="background:transparent;color:inherit;border:1px solid #879e97;padding:4px 10px;cursor:pointer">退出登录</button></form></nav>';
+    const nav='<nav aria-label="网站导航" style="display:flex;justify-content:space-between;align-items:center;gap:16px;padding:8px 24px;background:#203a35;color:#f5f3ec;font:16px/1.4 PingFang SC,Microsoft YaHei,sans-serif"><a href="/" style="color:inherit;text-decoration:none;min-height:44px;display:inline-flex;align-items:center;touch-action:manipulation">← 返回研究室</a><span>试卷总览</span><form method="post" action="/api/logout" style="margin:0"><button style="background:transparent;color:inherit;border:1px solid #879e97;min-height:44px;padding:8px 16px;cursor:pointer;font:inherit;touch-action:manipulation">退出登录</button></form></nav>';
     data=data.toString('utf8').replace(/<body([^>]*)>/i,`<body$1 data-content-release="${release.releaseId}">${nav}`).replace('</body>',deepLink+'</body>');
   }
   return new Response(data,{headers:{

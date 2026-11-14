@@ -1,1 +1,74 @@
-.collection-card{display:flex;align-items:center;justify-content:space-between;gap:30px;text-decoration:none;background:#203a35;color:#f5f3ec;padding:36px;margin-bottom:38px;border:1px solid #203a35;transition:background .2s}.collection-card:hover{background:#2c4c43}.collection-card .eyebrow{color:#c5ad8a;margin-bottom:17px}.collection-card h3{font:500 30px/1.5 "Songti SC","SimSun",serif;margin:0 0 15px}.collection-card p:not(.eyebrow){font-size:12px;line-height:2;color:#c9d2c8;margin:0;max-width:650px}.collection-action{flex-shrink:0;font-size:13px;border-bottom:1px solid #879e97;padding-bottom:9px}@media(max-width:600px){.collection-card{display:block;padding:24px}.collection-card h3{font-size:25px}.collection-card p:not(.eyebrow){font-size:11px}.collection-action{display:inline-block;margin-top:25px}.collection-card .eyebrow{font-size:9px;letter-spacing:2px}}
+.collection-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  margin-bottom: 32px;
+  padding: 32px;
+  border: 1px solid var(--ink);
+  border-radius: 0;
+  background: var(--ink);
+  box-shadow: var(--inset-dark);
+  color: var(--paper);
+  text-decoration: none;
+  transition: background-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease), transform var(--dur) var(--ease);
+}
+
+.collection-card .eyebrow {
+  margin-bottom: 12px;
+  color: #d4c2a4;
+}
+
+.collection-card h3 {
+  margin: 0 0 12px;
+  font: 500 28px/1.45 var(--serif);
+  letter-spacing: 0;
+}
+
+.collection-card p:not(.eyebrow) {
+  max-width: 40em;
+  margin: 0;
+  color: #d5ddd4;
+  font-size: 14px;
+  line-height: 1.75;
+}
+
+.collection-action {
+  flex-shrink: 0;
+  padding-bottom: 4px;
+  border-bottom: 1px solid rgba(245, 243, 236, 0.45);
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  transition: border-color var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .collection-card:hover {
+    background: var(--ink-raise);
+    box-shadow: var(--inset-dark), 0 12px 24px rgba(32, 58, 53, 0.16);
+    transform: translateY(-2px);
+  }
+
+  .collection-card:hover .collection-action {
+    border-bottom-color: var(--paper);
+  }
+}
+
+.collection-card:active { background: #34564d; }
+
+@media (max-width: 640px) {
+  .collection-card {
+    display: block;
+    padding: 24px;
+  }
+
+  .collection-card h3 { font-size: 24px; }
+
+  .collection-action {
+    display: inline-block;
+    margin-top: 20px;
+    min-height: 44px;
+    line-height: 44px;
+    padding-bottom: 0;
+  }
+}
