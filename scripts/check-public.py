@@ -21,7 +21,7 @@ for name in files:
   continue
  try:text=p.read_text()
  except UnicodeDecodeError:errors.append((name,'unexpected binary'));continue
- patterns=[r'gh[pousr]_[A-Za-z0-9]{25,}',r'github_pat_[A-Za-z0-9_]{30,}',r'sk-(?:proj-)?[A-Za-z0-9_-]{24,}',r'-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----',r'(?:prj_|dpl_|team_)[A-Za-z0-9]{15,}',r'/Users/[A-Za-z0-9._-]+/']
+ patterns=[r'gh[pousr]_[A-Za-z0-9]{25,}',r'github_pat_[A-Za-z0-9_]{30,}',r'sk-(?:proj-)?[A-Za-z0-9_-]{24,}',r'-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----',r'(?:prj_|dpl_|team_)[A-Za-z0-9]{15,}',r'/(?:Users|home)/[A-Za-z0-9._-]+/']
  for pattern in patterns:
   if re.search(pattern,text):errors.append((name,'secret, deployment linkage or personal path pattern'))
  if re.search(r'\b(?:AUTH_SECRET|MINERU_API_TOKEN|SUPABASE_SERVICE_ROLE_KEY)\s*=\s*[\'\"]?[A-Za-z0-9_-]{32,}',text) and not name.startswith('tests/'):errors.append((name,'literal credential assignment'))
