@@ -18,6 +18,11 @@ class ContentTests(unittest.TestCase):
   d=self.artifact('national/demo/分析数据.json');self.assertEqual(d['stats']['total'],3);self.assertEqual(d['stats']['valid'],2);self.assertEqual(d['stats']['pending'],1)
   self.assertEqual(d['items'][0]['D'],0);self.assertIn('[1,3]',d['items'][1]['answer']);self.assertIsNone(d['items'][2]['D'])
   self.assertEqual(d['stats']['mean'],sum(q['D'] for q in d['items'] if q['D'] is not None)/2)
+  notes=[s.get('commentary') for s in d['items'][1]['steps']]
+  self.assertTrue(any(n and '【分类与边界】' in n for n in notes))
+  page=(self.repo.release(self.repo.pointer()['releaseId'])/'artifacts/national/demo/试卷难度分析.html').read_text()
+  self.assertIn('就地批注',page)
+  self.assertIn('【分类与边界】',page)
  def test_change_propagates_and_other_units_stay_equal(self):
   before=self.artifact('national/demo/分析数据.json');c=self.change();c['units'][0]['value']['analysis_input']['risks'][0]['value']=2
   rid=self.repo.apply(c);after=self.artifact('national/demo/分析数据.json');q=after['items'][1];self.assertNotEqual(q['D'],before['items'][1]['D'])

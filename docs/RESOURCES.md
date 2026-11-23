@@ -24,6 +24,10 @@
 | [期中原创生成器](../scripts/setup-midterms-demo.py) | `npm run midterms:demo`；9卷27小问，含待核、缺配分和模拟缺卷 |
 | [期中导入器](../scripts/import-midterms.py) | `midterms:preview` / `midterms:import`；源结构见规范 |
 | [确定性评分引擎](../modules/studio/scoring.py) | HCT-rules-v1.1复算，输入证据由人提供 |
+| [规则口径](scoring-rules.md) | 六维、路径、取整、分母与复算命令 |
+| [教学批注工作流](annotation-workflow.md) | 先审题再划步；六个批注标签写到步骤旁 |
+| [步骤类型参考词典](../content/reference/step-types.json) | T01–T24 的纳入与排除边界；不替代各卷自带词典 |
+| [证据复算](../scripts/score-evidence.py) | 对已有 JSON 重算 H/C/T/D，拒绝覆盖输入 |
 | [题目JSON Schema](../schemas/unit.schema.json) | 既有ChangeSet题组的输入约束；期中包另按导入器规范 |
 | [变更JSON Schema](../schemas/change.schema.json) | 既有题组ChangeSet约束 |
 | [KaTeX初始化](../scripts/setup-demo.mjs) | 从npm固定版本复制本地脚本、样式和字体；不依赖CDN阅读 |
@@ -40,6 +44,7 @@
 | Node模块与访问边界 | `npm test` |
 | 既有内容版本库 | `npm run test:content` 与 `npm run content:check` |
 | 期中统计与示例生成 | `python3 -m unittest discover -s tests -p 'test_midterms*.py'` |
+| 规则复算与参考词典 | `python3 -m unittest tests/test_scoring_rules.py tests/test_step_types.py` |
 | 公开仓库边界 | `npm run check:public` |
 | 生产构建 | `npm run build` |
 | 浏览器冒烟 | 安装 `requirements-dev.txt` 与Playwright Chromium、完成构建后运行 `npm run test:browser` |

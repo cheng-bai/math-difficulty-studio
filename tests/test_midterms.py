@@ -46,13 +46,17 @@ class MidtermsTests(unittest.TestCase):
         directory=root/'papers'/paper['id']
         directory.mkdir(parents=True)
         (directory/'paper.json').write_text(json.dumps(paper))
-        (directory/'转录.md').write_text('# 完整转录\n\n原题 $x+1$。\n\n<script>alert(1)</script>\n\n来源 /'+'Users'+'/private/secret.pdf')
+        (directory/'转录.md').write_text('# 完整转录\n\n原题 $x+1$。\n\n<script>alert(1)</script>\n\n来源 /'+'Users'+'/private/secret.pdf\n另见 /'+'home'+'/private/notes.md\n')
         delivery=directory/'delivery'
         delivery.mkdir()
         result={'algorithm':'HCT-rules-v1.1','paper_id':paper['id'],'questions':[]}
         for i in range(3):
-            result['questions'].append({'evidence':{'id':f'q{i+1}','verification_status':'已核验',
-                                                  'pending':i==2,'score':points[i]},
+            evidence={'id':f'q{i+1}','verification_status':'已核验','pending':i==2,'score':points[i]}
+            if i==0:
+                evidence['steps']=[{'id':'s1','action':'代入已知值','output':'得到 2','dependencies':[],
+                                    'dimensions':{'K':0},'dimension_evidence':{'K':'题面直接给出'},
+                                    'commentary':'【易错与检查】代回核验。<script>alert(2)</script>'}]
+            result['questions'].append({'evidence':evidence,
                                         'computed':{'id':f'q{i+1}','H':20+i*10,'C':20,'T':10,'D':20+i*20,
                                                     'B':i,'pending':i==2,'branches':0,'review_flag':False}})
         (delivery/'评分明细.json').write_text(json.dumps(result))
@@ -121,7 +125,12 @@ class MidtermsTests(unittest.TestCase):
             reader=(release/'papers/jianping-2025-2026/index.html').read_text()
             self.assertIn('class="katex"',reader)
             self.assertNotIn('/Users/',reader)
+            self.assertNotIn('/home/',reader)
+            self.assertIn('〔本地来源〕',reader)
+            self.assertIn('就地批注',reader)
+            self.assertIn('代回核验',reader)
             self.assertNotIn('<script>alert(1)</script>',reader)
+            self.assertNotIn('<script>alert(2)</script>',reader)
             self.assertNotIn('<b>False</b>',reader)
             for section in ['paper-overview','paper-burden','paper-knowledge','paper-questions','reader-outline']:
                 self.assertIn('id="'+section+'"',reader)

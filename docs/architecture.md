@@ -12,7 +12,7 @@ flowchart LR
   A --> V[浏览器阅读器]
 ```
 
-- `modules/studio/scoring.py`：纯规则计算，不调用模型。
+- `modules/studio/scoring.py`：纯规则计算，不调用模型。口径见 `docs/scoring-rules.md`。`scripts/score-evidence.py` 只对已有证据复算，不覆盖输入。
 - `domain.py`：合同、题目来源、步骤依赖与统计分母。
 - `rendering.py`：安全Markdown、统一模型与输出生成。
 - `repository.py`：单机写锁、题目版本与发布版本、请求幂等、不可变快照、原子切换和回退。

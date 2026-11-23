@@ -70,7 +70,7 @@ def number(value):
 def clean(value):
     """Reader products retain source names, never private machine paths."""
     value = str(value or '')
-    value = re.sub(r'/Users/[^\s<>\]\)\"，。；]+', '〔本地来源〕', value)
+    value = re.sub(r'/(?:Users|home)/[^\s<>\]\)\"，。；]+', '〔本地来源〕', value)
     value = re.sub(r'[A-Za-z]:[\\/][^\s<>\]\)\"，。；]+', '〔本地来源〕', value)
     return value
 
@@ -434,13 +434,21 @@ def make_reader(paper, renderer, out, base):
         details = ''
         evidence = q['evidence']
         if evidence:
-            steps = ''.join('<tr><td>'+esc(s.get('id'))+'<small>前提 '+esc(', '.join(s.get('dependencies', [])) or '题干条件')+'</small></td><td>'+renderer.render(s.get('action', ''), directory)+'</td><td>'+renderer.render(s.get('output',''), directory)+'</td><td>'+esc(' · '.join(f'{k}={v}' for k,v in s.get('dimensions', {}).items()))+'</td><td>'+renderer.render('\n\n'.join(f'**{k}**：{v}' for k,v in s.get('dimension_evidence', {}).items()),directory)+'</td></tr>' for s in evidence.get('steps', []))
+            step_rows = evidence.get('steps', [])
+            show_notes = any(str(s.get('commentary') or '').strip() for s in step_rows)
+            def note_cell(step):
+                if not show_notes:
+                    return ''
+                text = str(step.get('commentary') or '').strip()
+                return '<td>'+(renderer.render(text, directory) if text else '—')+'</td>'
+            steps = ''.join('<tr><td>'+esc(s.get('id'))+'<small>前提 '+esc(', '.join(s.get('dependencies', [])) or '题干条件')+'</small></td><td>'+renderer.render(s.get('action', ''), directory)+'</td><td>'+renderer.render(s.get('output',''), directory)+'</td><td>'+esc(' · '.join(f'{k}={v}' for k,v in s.get('dimensions', {}).items()))+'</td><td>'+renderer.render('\n\n'.join(f'**{k}**：{v}' for k,v in s.get('dimension_evidence', {}).items()),directory)+'</td>'+note_cell(s)+'</tr>' for s in step_rows)
             path = ''
             # Preserve only audited calculation evidence, never raw input paths.
             path_values = q.get('calculation', {}).get('path', [])
             if path_values:
                 path = '<p>关键路径：'+esc(' → '.join(str(s.get('id')) for s in path_values))+'</p>'+table_for_path(path_values)
-            details = '<details class="evidence"><summary>查看逐步评分依据</summary><div class="prose">'+renderer.render(evidence.get('solution_basis',''),directory)+'</div><div class="table-scroll"><table><thead><tr><th>步骤 / 依赖</th><th>数学动作</th><th>结论</th><th>六维 0—2</th><th>六维依据</th></tr></thead><tbody>'+steps+'</tbody></table></div>'+path+'<div class="prose">'+renderer.render('**T 五项评分**\n\n'+dumps(evidence.get('t', []))+'\n\n**T 风险依据**\n\n'+risk_prose(evidence)+'\n\n**B 入口依据**\n\n'+str(evidence.get('B_evidence','')),directory)+'</div></details>'
+            note_head = '<th>就地批注</th>' if show_notes else ''
+            details = '<details class="evidence"><summary>查看逐步评分依据</summary><div class="prose">'+renderer.render(evidence.get('solution_basis',''),directory)+'</div><div class="table-scroll"><table><thead><tr><th>步骤 / 依赖</th><th>数学动作</th><th>结论</th><th>六维 0—2</th><th>六维依据</th>'+note_head+'</tr></thead><tbody>'+steps+'</tbody></table></div>'+path+'<div class="prose">'+renderer.render('**T 五项评分**\n\n'+dumps(evidence.get('t', []))+'\n\n**T 风险依据**\n\n'+risk_prose(evidence)+'\n\n**B 入口依据**\n\n'+str(evidence.get('B_evidence','')),directory)+'</div></details>'
         labels = ' · '.join([q['kind'],q['module']]+q['methods'])
         rendered_units.append(f'<article class="question-block" id="{anchor}"><div class="question-head"><h2>{esc(title)}</h2><span>{esc(labels)}</span><span>{q["points"] if q["points"] is not None else "配分待核"}{" 分" if q["points"] is not None else ""}</span></div>{score_html}<div class="prose question-stem">{content}</div>'+(' <p class="notice">'+esc(q['issue'])+'</p>' if q['issue'] else '')+'<details class="solution"><summary>答案与完整解析</summary><div class="prose">'+renderer.render(('**答案**\n\n'+q['answer']+'\n\n' if q['answer'] else '')+(q['solution'] or '本小问解析尚待整理；已有原解析见下方完整转录。'),directory)+'</div></details>'+details+'</article>')
     transcript = renderer.render(paper['_markdown'].read_text(encoding='utf-8-sig'), directory) if paper['has_transcript'] else '<p class="notice">完整转录尚未收录。</p>'

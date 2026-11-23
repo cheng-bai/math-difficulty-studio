@@ -105,7 +105,7 @@ PYTHON
 
 导入器读取正式明细，不替你进行数学核验或重新生成证据。只有 ID 匹配、规范版本支持、证据已核验、双方非 pending 且评分值合法时才计入确定评分。主稿的待核状态优先；没有正式结果的问显示空值，CSV不填0。
 
-全卷及跨卷保持 `algorithm/parameter_version/parameters/dictionary_version/step_types` 一致。指纹不同会暂停相关难度图比较。评分细节与边界以 [评分引擎源码](../modules/studio/scoring.py) 和 [评分测试](../tests/test_midterms_demo.py) 为准；程序复算不证明维度及风险依据在教学上合理。
+全卷及跨卷保持 `algorithm/parameter_version/parameters/dictionary_version/step_types` 一致。指纹不同会暂停相关难度图比较。评分细节与边界以 [评分引擎源码](../modules/studio/scoring.py)、[规则口径](scoring-rules.md) 和 [评分测试](../tests/test_scoring_rules.py) 为准；程序复算不证明维度及风险依据在教学上合理。步骤旁的教学批注写入 `commentary`，阅读页在有内容时增加「就地批注」列。写法见 [教学批注工作流](annotation-workflow.md)。可选类型边界见 [参考词典](../content/reference/step-types.json)，它不替换本卷自带的 `step_types`。
 
 ## 4. 预览、发布与回滚
 

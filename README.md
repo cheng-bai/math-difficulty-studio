@@ -47,6 +47,8 @@ npm run local
 | 文档 | 内容 |
 | --- | --- |
 | [产品使用手册](docs/USER_GUIDE.md) | 教师首次使用、OCR到核验与评分、交互、下载、登录部署及故障排查 |
+| [规则口径](docs/scoring-rules.md) | 六维、H/C/T/D、取整、分母与复算命令 |
+| [教学批注工作流](docs/annotation-workflow.md) | 先审题再划步，六个标签写在步骤旁边 |
 | [资源索引](docs/RESOURCES.md) | 原创演示、工具、规范、测试与更新办法 |
 | [期中输入与发布规范](docs/midterms.md) | 完整源包字段、固定比较布局、统计口径与版本恢复 |
 | [更新记录](CHANGELOG.md) | 本轮产品功能与资源变化 |
