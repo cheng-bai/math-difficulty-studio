@@ -1,0 +1,33 @@
+.topic-workspace { max-width: 1040px; padding-bottom: 64px; }
+.topic-workspace .topbar { gap: 16px; }
+.topic-intro { padding: clamp(32px, 6vw, 72px) 0 24px; }
+.topic-intro h1 { margin: 0.25em 0; font: 600 clamp(2rem, 5vw, 3.75rem)/1.2 var(--serif); }
+.topic-intro .lead { margin-top: 0; }
+.topic-meta { color: var(--muted); font-size: 0.9rem; }
+.topic-section { margin-top: 24px; }
+.topic-workspace :is(section,article)[id] { scroll-margin-top: 16px; }
+.topic-workspace h2 { margin: 0 0 12px; font: 600 1.45rem/1.35 var(--serif); }
+.topic-workspace h3 { margin: 0 0 8px; font-size: 1rem; }
+.topic-workspace p:last-child { margin-bottom: 0; }
+.topic-links { display: flex; flex-wrap: wrap; gap: 4px 20px; }
+.topic-links a { padding: 8px 0; text-underline-offset: 4px; }
+.topic-knowledge { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.topic-card { padding: clamp(14px, 3vw, 24px); background: var(--paper-3); border: 1px solid var(--line); }
+.topic-method { border-top: 3px solid var(--ink); }
+.topic-problem, .topic-solution, .topic-teaching { padding: 14px 16px; margin: 12px 0; background: var(--paper-2); }
+.topic-problem { border-left: 3px solid var(--ink); }
+.topic-problem p:first-child { margin-top: 0; }
+.topic-solution li + li, .topic-method li + li { margin-top: 0.6em; }
+.topic-workspace ol { padding-left: 1.5em; }
+.topic-solution summary, .topic-reference > summary { font-weight: 600; }
+.topic-warning, .topic-annotation { color: var(--accent-deep); }
+.topic-annotation { font-size: 0.9rem; }
+.topic-attempt label { display: block; font-size: 0.9rem; }
+.topic-attempt textarea { display: block; width: 100%; margin: 6px 0 12px; padding: 10px; border: 1px solid var(--line-strong); background: var(--paper-3); resize: vertical; }
+.topic-button { min-height: 44px; border: 1px solid var(--ink); background: var(--ink); color: var(--paper-3); padding: 8px 14px; }
+.topic-button:hover { background: var(--ink-raise); }
+
+@media (max-width: 720px) {
+  .topic-workspace { padding-inline: 16px; }
+  .topic-knowledge { grid-template-columns: 1fr; }
+}

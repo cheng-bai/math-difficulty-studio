@@ -2,6 +2,7 @@
 import hashlib,json,os,sys
 from pathlib import Path
 from playwright.sync_api import sync_playwright
+from topic_smoke import topic_smoke
 base=sys.argv[1];root=Path(__file__).resolve().parents[1];out=root/'test-results';out.mkdir(exist_ok=True);checks=[]
 def check(name,ok):
  if not ok:raise AssertionError(name)
@@ -12,6 +13,7 @@ with sync_playwright() as p:
  browser=p.chromium.launch(**options);context=browser.new_context(viewport={'width':1280,'height':900});page=context.new_page();errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
  check('anonymous requires login',context.request.get(base+'/',max_redirects=0).status in [303,307])
  r=context.request.post(base+'/api/login',data={'username':'fixture','password':'browser-fixture-password'},headers={'Origin':base});check('fixture login',r.status==200)
+ topic_smoke(base,browser,context,check,out)
  page.goto(base+'/');page.locator('[data-content-release]').wait_for();rid=page.locator('[data-content-release]').get_attribute('data-content-release');check('demo totals','3 个分析单元 · 2 个已定分 · 1 个待核' in page.inner_text('main'))
  page.goto(base+'/national/试卷总览.html');check('one original collection',page.locator('.card').count()==1)
  r=page.goto(base+'/national/demo/试卷难度分析.html#q=2');page.wait_for_function("()=>window.dashboard&&dashboard.state.current==='2'");check('same content release',r.headers.get('x-content-release')==rid)
